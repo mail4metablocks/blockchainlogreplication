@@ -18,6 +18,18 @@ The neighbors receive the updated transaction log and add the new transaction to
 The process continues until all nodes in the network have received and added the new transaction to their copy of the transaction log.
 This sequence of events helps to ensure that all nodes in the network have a consistent view of the transaction history and can reach consensus on the state of the blockchain. It also helps to maintain the security and integrity of the network by making it more difficult for a single node or group of nodes to manipulate the transaction history.
 
+
+
+![image](https://user-images.githubusercontent.com/117555665/208233489-f4768c91-4039-4baa-8efa-585dd6e75754.png)
+
+In this diagram, the arrows represent the flow of information or actions. The rectangle labeled "Transaction Initiated" represents the initiation of a new transaction by a user. The diamond labeled "Transaction Broadcast" represents the broadcast of the transaction to the network. The rectangles labeled "Transaction Received" and "Transaction Verified" represent the receipt and verification of the transaction by multiple nodes in the network. The rectangle labeled "Transaction Added to Log" represents the addition of the transaction to the local copy of the transaction log by each node. The circles labeled "Updated Log Replicated" and "Updated Log Received" represent the replication of the updated transaction log to a small number of neighboring nodes in the network, using a process called "gossiping."
+
+In a gossip-based log replication system, each node shares its updated transaction log with a small number of other nodes, which then pass the information along to their own neighbors. This helps to ensure that all nodes in the network eventually receive a copy of the updated transaction log, even if they are not directly connected to every other node in the network. Gossiping can be an effective way to replicate the transaction log in a decentralized, distributed network, as it allows the network to adapt and function even if some nodes fail or become unavailable.
+
+
+### Explanation
+
+'''
 The Node struct represents a single node in the network. It has three fields:
 
 id: a unique ID for the node
@@ -36,8 +48,6 @@ After this, we add some entries to node 0's transaction log. We then call the re
 This code sample demonstrates how log replication can be implemented in Rust using mutexes to synchronize access to the transaction log and Arc (Atomic Reference Count) to allow for concurrent access to the log from multiple threads. It is just one possible way to implement log replication in Rust, and there may be other approaches that could also be effective.
 
 
-![image](https://user-images.githubusercontent.com/117555665/208233489-f4768c91-4039-4baa-8efa-585dd6e75754.png)
 
-In this diagram, the arrows represent the flow of information or actions. The rectangle labeled "Transaction Initiated" represents the initiation of a new transaction by a user. The diamond labeled "Transaction Broadcast" represents the broadcast of the transaction to the network. The rectangles labeled "Transaction Received" and "Transaction Verified" represent the receipt and verification of the transaction by multiple nodes in the network. The rectangle labeled "Transaction Added to Log" represents the addition of the transaction to the local copy of the transaction log by each node. The circles labeled "Updated Log Replicated" and "Updated Log Received" represent the replication of the updated transaction log to a small number of neighboring nodes in the network, using a process called "gossiping."
 
-In a gossip-based log replication system, each node shares its updated transaction log with a small number of other nodes, which then pass the information along to their own neighbors. This helps to ensure that all nodes in the network eventually receive a copy of the updated transaction log, even if they are not directly connected to every other node in the network. Gossiping can be an effective way to replicate the transaction log in a decentralized, distributed network, as it allows the network to adapt and function even if some nodes fail or become unavailable.
+
