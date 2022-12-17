@@ -18,6 +18,24 @@ The neighbors receive the updated transaction log and add the new transaction to
 The process continues until all nodes in the network have received and added the new transaction to their copy of the transaction log.
 This sequence of events helps to ensure that all nodes in the network have a consistent view of the transaction history and can reach consensus on the state of the blockchain. It also helps to maintain the security and integrity of the network by making it more difficult for a single node or group of nodes to manipulate the transaction history.
 
+The Node struct represents a single node in the network. It has three fields:
+
+id: a unique ID for the node
+log: a vector of transactions that have been recorded on the node, wrapped in an Arc<Mutex<T>> to allow for concurrent access
+neighbors: a vector of nodes that the current node is connected to
+The Node struct has several methods:
+
+new(): a constructor that creates a new Node with a given ID and an empty transaction log
+add_neighbor(): a method that adds a new node as a neighbor to the current node
+replicate_log(): a method that replicates the current node's transaction log to all of its neighbors
+receive_log(): a method that receives an updated transaction log from a neighbor and adds any new entries to the local log
+In the main() function, we create a hash map to store the nodes in the network. We then create five nodes and add them to the hash map. Next, we connect the nodes to each other by adding them as neighbors to each other.
+
+After this, we add some entries to node 0's transaction log. We then call the replicate_log() method on node 0 to replicate the updated log to its neighbors. Finally, we iterate over all nodes in the network and print out their transaction logs to see the result of the log replication process.
+
+This code sample demonstrates how log replication can be implemented in Rust using mutexes to synchronize access to the transaction log and Arc (Atomic Reference Count) to allow for concurrent access to the log from multiple threads. It is just one possible way to implement log replication in Rust, and there may be other approaches that could also be effective.
+
+
 ![image](https://user-images.githubusercontent.com/117555665/208233489-f4768c91-4039-4baa-8efa-585dd6e75754.png)
 
 In this diagram, the arrows represent the flow of information or actions. The rectangle labeled "Transaction Initiated" represents the initiation of a new transaction by a user. The diamond labeled "Transaction Broadcast" represents the broadcast of the transaction to the network. The rectangles labeled "Transaction Received" and "Transaction Verified" represent the receipt and verification of the transaction by multiple nodes in the network. The rectangle labeled "Transaction Added to Log" represents the addition of the transaction to the local copy of the transaction log by each node. The circles labeled "Updated Log Replicated" and "Updated Log Received" represent the replication of the updated transaction log to a small number of neighboring nodes in the network, using a process called "gossiping."
